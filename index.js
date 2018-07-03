@@ -40,32 +40,4 @@ exports.handler = function(event, context) {
               }
           });
     });
-
-    // http.get(qrUrl, function(res) {
-    //     var body = '';
-    //     res.on('data', function(chunk) {
-    //       // Agregates chunks
-    //       body += chunk;
-    //     });
-    //     res.on('end', function() {
-    //       // Once you received all chunks, send to S3
-    //         var params = {
-    //             Bucket: QR_BUCKET, 
-    //             Key: key, 
-    //             Body: body,
-    //             ContentType: 'image/png',
-    //             ACL: 'public-read'
-    //             };
-    //             return s3.putObject(params, function(err, data2){
-    //                 if (err) { 
-    //                 console.log(err);
-    //                 console.log('Error uploading data: ', data2); 
-    //                 } else {
-    //                 console.log('Succesfully uploaded the image: ' + key);
-    //                 }
-    //             });
-    //     });
-    //   });
-
-    
 };
