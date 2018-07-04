@@ -2,7 +2,6 @@ console.log('Loading event');
 var AWS = require('aws-sdk');
 var request = require('request-promise').defaults({ encoding: null });
 var moment = require('moment');
-// var http = require('http');
 var s3 = new AWS.S3();
 
 const QR_URL = 'http://api.qrserver.com/v1/create-qr-code/';
@@ -21,7 +20,7 @@ exports.handler = function(event, context) {
     console.log(qrUrl);
     const qrCodeRequest = request.get(qrUrl, {followRedirect: false});
 
-    qrCodeRequest.then((img) => {
+    return qrCodeRequest.then((img) => {
 
         const buffer = Buffer.from(img, 'base64');
         var data = {
@@ -31,13 +30,11 @@ exports.handler = function(event, context) {
             ContentType: 'image/png',
             ACL: 'public-read'
           };
-          return s3.putObject(data, function(err, data){
-              if (err) { 
-                console.log(err);
-                console.log('Error uploading data: ', data); 
-              } else {
-                console.log('Succesfully uploaded the image: ' + key);
-              }
-          });
+        const putObject = s3.putObject(data).promise();
+
+        return putObject.then((data, err) => {
+            if(err) console.err(err);
+            return key;
+        });
     });
 };
