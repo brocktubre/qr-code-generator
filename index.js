@@ -12,7 +12,7 @@ exports.handler = function(event, context) {
     const d = new Date();
     d.setHours(d.getHours() - 5);
     const todaysDateId = moment(d.toISOString()).format("MM-DD-YYYY");
-
+    let allPromisesList = new Array();
 
     event.students.forEach(item => {
         let key = todaysDateId + '_' + item.student_id + '.png';
@@ -38,12 +38,14 @@ exports.handler = function(event, context) {
                 };
                 const putObject = s3.putObject(data).promise();
 
-                return putObject.then((data, err) => {
-                    if(err) console.err(err);
-                    else {
-                        return key;
-                    }
-                });
+                allPromisesList.push(putObject.then((data, err) => {
+                        if(err) console.err(err);
+                        else {
+                            return key;
+                        }
+                    })
+                );
             });
-        });
+        return Promise.all(allPromisesList);
+    });
 };
