@@ -17,7 +17,7 @@ exports.handler = function(event, context) {
     event.students.forEach(item => {
         let key = todaysDateId + '_' + item.student_id + '.png';
         let qrUrl = QR_URL;
-        qrUrl += '?data=' + key + '!&size=100x100';
+        qrUrl += '?data=' + key + '!&size=500x500';
         console.log(qrUrl);
         const qrCodeRequest = request.get(qrUrl, {followRedirect: false});
 

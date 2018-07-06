@@ -1,8 +1,0 @@
-{
-  "Template": {
-    "TemplateName": "MyTemplate",
-    "SubjectPart": "CSC 440/640 QR Attendance Code",
-    "HtmlPart": "<h1>Hello {{name}},</h1><p>Here is the link to your QR code: {{qr_code_url}}.</p>",
-    "TextPart": "Hello {{name}},\r\nYour QR code is: {{qr_code_url}}."
-  }
-}
